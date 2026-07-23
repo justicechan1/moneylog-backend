@@ -1,0 +1,56 @@
+spring:
+  application:
+    name: moneylog
+  profiles:
+    active: local
+
+  jpa:
+    hibernate:
+      ddl-auto: update     # 로컬 개발 편의(운영은 validate/none 권장)
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false    # 지연로딩 관련 문제 예방(권장)
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+---
+# ===== 로컬 프로파일 (H2 인메모리) =====
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:h2:mem:moneylog;MODE=MySQL   # MySQL 문법 호환 모드
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true        # http://localhost:8080/h2-console
+      path: /h2-console
+
+  jpa:
+    show-sql: true
+
+---
+# ===== 운영 프로파일 (MySQL 8) =====
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/moneylogdb
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate   # 운영은 스키마 자동 변경 금지
+    show-sql: false

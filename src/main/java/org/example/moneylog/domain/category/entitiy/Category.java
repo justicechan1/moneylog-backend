@@ -32,6 +32,10 @@ public class Category extends BaseTimeEntity {
         this.type = type;
     }
 
+    public static Category of(User user, String name, CategoryType type) {
+        return new Category(user, name, type);
+    }
+
     // 수정은 Setter가 아닌 의도가 드러나는 메서드로
     public void update(String name, CategoryType type) {
         this.name = name;

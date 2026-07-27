@@ -11,6 +11,7 @@ import org.example.moneylog.domain.user.entitiy.User;
 import org.example.moneylog.domain.user.repository.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final TransactionRepository transactionRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     @Transactional
@@ -32,7 +34,7 @@ public class DataInitializer implements CommandLineRunner {
         // 1) 저장
         User user = userRepository.save(User.builder()
                 .email("test@likelion.com")
-                .password("(BCrypt는 3일차) 임시")   // 실제로는 절대 평문 저장 금지
+                .password(passwordEncoder.encode("password1234"))   // 로그인 테스트용 원문: password1234
                 .nickname("머니로그유저")
                 .build());
 

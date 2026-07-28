@@ -40,6 +40,17 @@ services:
     networks:
       - moneylog-net
 
+  frontend:
+    image: ${FRONTEND_IMAGE:-ghcr.io/justicechan1/moneylog-frontend:latest}
+    container_name: moneylog-frontend
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    networks:
+      - moneylog-net
+
 volumes:
   moneylog-mysql-data:
 

@@ -46,21 +46,3 @@ spring:
 
   jpa:
     show-sql: true
-
----
-# ===== 운영 프로파일 (MySQL 8) =====
-spring:
-  config:
-    activate:
-      on-profile: prod
-
-  datasource:
-    url: jdbc:mysql://${DB_HOST:localhost}:3306/moneylogdb
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-
-  jpa:
-    hibernate:
-      ddl-auto: validate   # 운영은 스키마 자동 변경 금지
-    show-sql: false

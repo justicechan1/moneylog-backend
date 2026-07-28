@@ -17,16 +17,18 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
+    networks:
+      - moneylog-net
 
   app:
     image: ${APP_IMAGE:-ghcr.io/justicechan1/moneylog-backend:latest}
+    build: .   # 로컬 테스트 시 현재 Dockerfile로 빌드 (CI/배포는 GHCR 이미지 pull)
     container_name: moneylog-app
     restart: unless-stopped
     depends_on:
       mysql:
         condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: prod
       DB_HOST: mysql
       DB_USERNAME: admin
       DB_PASSWORD: ${MYSQL_PASSWORD}
@@ -34,6 +36,11 @@ services:
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5173}
     ports:
       - "8080:8080"
+    networks:
+      - moneylog-net
 
 volumes:
   moneylog-mysql-data:
+
+networks:
+  moneylog-net:

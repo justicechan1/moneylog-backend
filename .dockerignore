@@ -6,3 +6,5 @@ out
 *.iml
 .env
 HELP.md
+*.md
+site/

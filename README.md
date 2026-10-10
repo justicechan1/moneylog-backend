@@ -1,6 +1,17 @@
 # moneylog (백엔드)
 
-가계부 서비스 백엔드 API 서버입니다.
+가계부 서비스 백엔드 API 서버입니다. 기획부터 EC2 배포까지 1인으로 6일 만에 완료했습니다.
+
+| 항목 | 내용 |
+|---|---|
+| 개발 기간 | 2026.07 (6일) |
+| 인원 | 1인 (백엔드 · 프론트엔드 · 배포) |
+| 프론트엔드 | [moneylog-frontend](https://github.com/justicechan1/moneylog-frontend) |
+
+## 트러블슈팅
+
+1. **CI에서만 발생한 JWT `WeakKeyException`** — CI 환경에 `JWT_SECRET`이 설정되지 않아 빈 시크릿으로 서명 키를 만들다 테스트가 실패. 운영은 환경변수 주입을 유지하고, 로컬·CI 전용 32바이트 이상 더미 기본값을 추가 (`7045488`)
+2. **MySQL healthcheck 타임아웃** — 저사양 EC2에서 MySQL 초기 구동이 healthcheck 재시도 한도보다 오래 걸려 배포가 실패. `retries` 완화와 `start_period: 60s` 추가로 초기 구동 시간 확보 (`7045488`)
 
 ## 기술 스택
 
